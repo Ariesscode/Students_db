@@ -120,11 +120,15 @@ app.delete('/deleteStudent', async (request, response) => {
 //update request
 
 app.put('/addLike', (request, response) => {
-    console.log(`Update requested data: firstName = ${request.body.firstNameS}, lastName = ${request.body.lastNameS}`);    db.collection('studentsdata').updateOne({
+    console.log(`Update requested data: firstName = ${request.body.firstNameS}, lastName = ${request.body.lastNameS}`);   
+ 
+    db.collection('studentsdata').updateOne({
         firstName: request.body.firstNameS,
         lastName: request.body.lastNameS
+     
+    
     }, {
-        $inc: { likes: 1}
+        $inc: {likes: 1} //if error incrementing make sure to check POST route or database to make sure data is saved correctly and Conversions
     }, {
         upsert: false
     }).then(result => {
@@ -135,11 +139,11 @@ app.put('/addLike', (request, response) => {
 
 
 
-
+//Convert data to necessary strin, number, decimal before server send daata to database, could cause error manipulating data if not store correctly
 
 app.post('/addStudent', (request, response) => {
-    db.collection('studentsdata').insertOne({firstName: request.body.firstName, lastName: request.body.lastName, age: request.body.age,
-        gpa: request.body.gpa, likes: request.body.likes})
+    db.collection('studentsdata').insertOne({firstName: request.body.firstName, lastName: request.body.lastName, age: Number(request.body.age),
+        gpa: parseFloat(request.body.gpa), likes: Number(request.body.likes) || 0}) //0 acts as a fallback just in case field is empty or invalid/ Number ensures the likes is stored as a number//ParseFLoat ensures to convery the data to decimal 0.0
         .then(data => {
             console.log('Student added')
             response.status(201).redirect('/') //redirect to the get route which will show the new inserted data

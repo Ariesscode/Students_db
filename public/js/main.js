@@ -53,15 +53,14 @@ async function addLike(){
     const fName = this.parentNode.childNodes[1].innerText.trim();
     const lName = this.parentNode.childNodes[3].innerText.trim();
     
-    // const likes = this.parentNode.childNodes[5].innerText.trim()
-    // const nLikes = Number(likes)
+    
 try{
     const response = await fetch('/addLike', {
         method: 'PUT',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
             'firstNameS': fName,
-            'lastNameS': lName 
+            'lastNameS': lName
          //we don't need to send the linkes because we are using increment in server side to update likes 
         })
 
