@@ -33,7 +33,7 @@ async function deleteStudents(){
     if (data.success) {
         this.parentNode.remove();
     } else {
-        console.error('Failed to delte onee student:', data.message);
+        console.error('Failed to delete onee student:', data.message);
     }
 
  }catch(error){
@@ -46,19 +46,21 @@ async function deleteStudents(){
 
 //Update request
 
-const likeBtn = document.querySelectorAll('.likes')
+const likeBtn = document.querySelectorAll('.likeBtn')
 Array.from(likeBtn).forEach((element) => element.addEventListener('click', addLike))
 
 async function addLike(){
-    const fName = this.parentNode.childNodes[1].innerText
-    const lName = this.parentNode.childNodes[3].innerText
-    const likes = this.parentNode.childNodes[5].innerText
+    const fName = this.parentNode.childNodes[1].innerText.trim();
+    const lName = this.parentNode.childNodes[3].innerText.trim();
+    
+    // const likes = this.parentNode.childNodes[5].innerText.trim()
+    // const nLikes = Number(likes)
 try{
     const response = await fetch('/addLike', {
         method: 'PUT',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
-            'firstnameS': fName,
+            'firstNameS': fName,
             'lastNameS': lName 
          //we don't need to send the linkes because we are using increment in server side to update likes 
         })

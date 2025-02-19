@@ -76,14 +76,6 @@ app.get('/', (request, response) => {
         });
 });
 
-    // Mock data instead of DB query
-    // const students = [
-    //     { firstName: 'John', lastName: 'Doe', gpa: 3.8, age: 19, likes: 5 },
-    //     { firstName: 'Jane', lastName: 'Doe', gpa: 3.9, age: 21, likes: 2 }
-    // ];
-//     res.render('index.ejs', { students }); //using for now till i get my database working.
-// });
-
 
 
 app.delete('/deleteStudent', async (request, response) => {
@@ -128,13 +120,13 @@ app.delete('/deleteStudent', async (request, response) => {
 //update request
 
 app.put('/addLike', (request, response) => {
-    db.collection('studentsdata').updateOne({
-        firstname: request.body.firstNameS,
+    console.log(`Update requested data: firstName = ${request.body.firstNameS}, lastName = ${request.body.lastNameS}`);    db.collection('studentsdata').updateOne({
+        firstName: request.body.firstNameS,
         lastName: request.body.lastNameS
     }, {
         $inc: { likes: 1}
     }, {
-        upsert: true
+        upsert: false
     }).then(result => {
         console.log('updated likes by 1')
         response.json('like added!')
