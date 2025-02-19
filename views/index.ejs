@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/56f757dad7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/styles.css"> <!--Express static already serves files up from public folder so all you need is a slash-->
+
+</head>
+
+<body>
+    <h1>Snatching data from MONGODB:</h1>
+    <h2>Students info:</h2>
+
+    <ul class="students">
+        <% for(let i=0; i < students.length; i++) { %>
+            <li class="student">
+                <span>
+                    <%= students[i].firstName %>
+                </span>
+                <span>
+                    <%= students[i].lastName %>
+                </span>
+                <span>
+                    <%= students[i].age %>
+                </span>
+                <span>
+                    <%= students[i].gpa %>
+                </span> <!-- Fixed this line -->
+                <span>
+                    <%= students[i].likes %>
+                </span>
+                
+                    <i class="fa fa-thumbs-up student-actions"></i>
+                    <i class="fa fa-trash deleteBtn student-actions"></i>
+            </li>
+            <% } %>
+    </ul>
+
+    <h3>Add Student:</h3>
+    <form action="/addStudent" method="POST">
+        <label for="firstName">First name:</label>
+        <input id="firstName" type="text" name="firstName" placeholder="John">
+
+        <label for="lastName">Last name:</label>
+        <input id="lastName" type="text" name="lastName" placeholder="Doe">
+
+        <label for="age">Age:</label>
+        <input id="age" type="number" name="age" placeholder="19">
+
+        <label for="gpa">GPA:</label>
+        <input id="gpa" type="number" name="gpa" step="0.1" placeholder="1.0"> <!--step = 0.1 enables decimals to be passed in input-->
+
+        <label for="likes">Likes:</label>
+        <input id="likes" type="number" name="likes" placeholder="1">
+
+        <input type="submit" value="Add Student">
+    </form>
+
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
