@@ -46,20 +46,7 @@ MongoClient.connect(dbConnectionStr, { useNewUrlParser: true, useUnifiedTopology
 
 
 //db using MongoDB to store students info
-
-// app.get('/', (request, response) => {
-//     db.collection('studentsdata').find().toArray() //find all documents in the students collection and put them into an array
-//     .then(data => {
-//         console.log(data)
-//         response.render('index.ejs', {students: data}) //we are passing an object to EJS file for rendering, we will use the students variable too plug data in template
-//     })
-//     .catch(error =>{
-//         console.error(error)
-//     response.status(500).send('An error occurred while fetching data') // Error handling
-
-
-//     })
-// })
+//Get request
 app.get('/', (request, response) => {
     db.collection('studentsdata')
         .find()
@@ -77,7 +64,7 @@ app.get('/', (request, response) => {
 });
 
 
-
+//Delete request
 app.delete('/deleteStudent', async (request, response) => {
     try {
         console.log('Delete request received:', request.body);
@@ -101,22 +88,6 @@ app.delete('/deleteStudent', async (request, response) => {
 });
 
 
-// app.delete('/deleteStudent', (request, response) => {
-//     console.log('Delete request received:', request.body);
-
-//     const result = await db.collection('studentsdata').deleteOne({
-//         firstName: request.body.firstName.trim(),
-//         lastName: request.body.lastName.trim()})
-// .then(data =>{
-//     console.log('student deleted')
-//     response.json('student deleted')
-// })
-// .catch(error => console.error(error))
-// })
-
-
-
-
 //update request
 
 app.put('/addLike', (request, response) => {
@@ -138,9 +109,8 @@ app.put('/addLike', (request, response) => {
 })
 
 
-
+//Post request
 //Convert data to necessary strin, number, decimal before server send daata to database, could cause error manipulating data if not store correctly
-
 app.post('/addStudent', (request, response) => {
     db.collection('studentsdata').insertOne({firstName: request.body.firstName, lastName: request.body.lastName, age: Number(request.body.age),
         gpa: parseFloat(request.body.gpa), likes: Number(request.body.likes) || 0}) //0 acts as a fallback just in case field is empty or invalid/ Number ensures the likes is stored as a number//ParseFLoat ensures to convery the data to decimal 0.0
@@ -156,17 +126,22 @@ app.post('/addStudent', (request, response) => {
     })
        
     })
-
-
     // app.get('/', (request, response) => {
-    //     db.collection('studentsdata').find().toArray()
-    //     .then(data =>{
+    //     db.collection('studentsdata').find().toArray() //find all documents in the students collection and put them into an array
+    //     .then(data => {
     //         console.log(data)
-    //        response.status(200).render('index.ejs', { info: data})
-    //     }).catch(error => console.error(error))
-    //     res.status(500).send('Internal Server Error');
-
+    //         response.render('index.ejs', {students: data}) //we are passing an object to EJS file for rendering, we will use the students variable too plug data in template
+    //     })
+    //     .catch(error =>{
+    //         console.error(error)
+    //     response.status(500).send('An error occurred while fetching data') // Error handling
+    
+    
+    //     })
     // })
+
+
+  
     app.listen(PORT, () =>{
         console.log(`Server running on ${PORT}!`)
     });
