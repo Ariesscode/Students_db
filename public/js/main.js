@@ -33,7 +33,7 @@ async function deleteStudents(){
     if (data.success) {
         this.parentNode.remove();
     } else {
-        console.error('Failed to delete one student:', data.message);
+        console.error('Failed to delte one student:', data.message);
     }
 
  }catch(error){
