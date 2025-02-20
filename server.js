@@ -21,9 +21,8 @@ app.use(express.static('public')) //automatically serves up files that are sent 
 app.use(express.urlencoded({ extended: true })); // Parses form data
 app.use(express.json()); //Middleware automatically takes care of parsing income JSON payloads in the request.body
 //Any Json coming from the client side will need to be stringify before sent to server then parsed in server side to be able to have access to request.body
-app.use(cookieParser()); // Parses cookies, needs to be before CSRF protection
-const csrfProtection = csrf({ cookie: true }); // Set up CSRF protection with cookies
-
+app.use(cookieParser()); // Parse cookies before CSRF middleware
+const csrfProtection = csrf({ cookie: true }); // Enable CSRF protection using cookies
 
 
 
@@ -116,7 +115,8 @@ app.put('/addLike', (request, response) => {
 
 //Post request
 //Convert data to necessary strin, number, decimal before server send daata to database, could cause error manipulating data if not store correctly
-app.post('/addStudent', csrfProtection, (request, response) => {
+app.post('/addStudent', csrfProtection,(request, response) => {
+    
     db.collection('studentsdata').insertOne({firstName: sanitizeHtml(request.body.firstName), lastName: sanitizeHtml(request.body.lastName), age: parseInt(request.body.age) || 0,
         gpa: parseFloat(request.body.gpa) || 0, likes: parseInt(request.body.likes) || 0}) //0 acts as a fallback just in case field is empty or invalid/ Number ensures the likes is stored as a number//ParseFLoat ensures to convery the data to decimal 0.0
         .then(data => {
