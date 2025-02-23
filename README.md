@@ -6,12 +6,12 @@
 ### Badges
 
 ## Description 
- This Mongo-DB-Project is focused on creating a secure student administration system. **CRSF (Cross-Site Request Forgery)**, a token which is stored in each of the user's requests. This token is used in the server-side to validate if the user is allowed to make CRUD (CREATE, READ, UPDATE, DELETE) operations to the app's Mongo database.
- One of the middlewares added was **cookie-parser**, which managed the crsf protection and made sure each request had a token before granting access. 
+ This Mongo-DB-Project is focused on creating a secure student administration system. **CRSF (Cross-Site Request Forgery)**, a security measure to prevent attackers (hackers) impersonating a logged-in user. Third-party site, domains, malicious users  have a way of tricking the user's browser into making unwanted requests. 
+ One of the middlewares used, **cookie-parser**, which manages the crsf protection, the token is stored in a hidden element or a cookie in the user's browser, once the logged in user visits the site. This unique token is sent with each requests a user performs to make sure the user's token and the server token match. If the token does not match, the requests won't be made. This solves the problem for third-party attempts of using another logged in user's session cookies to make unauthorized requests.
 <br>
 
 **IP Whitelisting and Server-side Authent**
-This will be added soon, so that only the predefined networks and users can have access and interact with the student adminitration system. Any networks or users that are not whitelisted, will not have access to the server and this will prevent unauthorized external access and interations via requests. 
+This will be added soon, so that only the predefined networks, domains, users can have access to the app. Any networks or users that are not whitelisted, will not have access to the the site or server and this will prevent unauthorized external access and interations via requests. 
 <br>
 
 **HTML Sanitization**
