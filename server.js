@@ -51,7 +51,12 @@ MongoClient.connect(dbConnectionStr, { useNewUrlParser: true, useUnifiedTopology
 
 //db using MongoDB to store students info
 //Get request
-app.get('/', csrfProtection, (request, response) => {
+
+app.get('/', (request,response) => {
+    response.render('login.ejs')
+})
+
+app.get('/dashboard', csrfProtection, (request, response) => {
     db.collection('studentsdata')
         .find()
         .toArray() // Fetch all documents and convert them into an array
@@ -69,7 +74,7 @@ app.get('/', csrfProtection, (request, response) => {
 
 
 //Delete request
-app.delete('/deleteStudent', async (request, response) => {
+app.delete('/dashboard/deleteStudent', async (request, response) => {
     try {
         console.log('Delete request received:', request.body);
 
@@ -94,7 +99,7 @@ app.delete('/deleteStudent', async (request, response) => {
 
 //update request
 
-app.put('/addLike', (request, response) => {
+app.put('/dashboard/addLike', (request, response) => {
     console.log(`Update requested data: firstName = ${request.body.firstNameS}, lastName = ${request.body.lastNameS}`);   
  
     db.collection('studentsdata').updateOne({
@@ -115,7 +120,7 @@ app.put('/addLike', (request, response) => {
 
 //Post request
 //Convert data to necessary strin, number, decimal before server send daata to database, could cause error manipulating data if not store correctly
-app.post('/addStudent', csrfProtection,(request, response) => {
+app.post('/dashboard/addStudent', csrfProtection,(request, response) => {
     
     db.collection('studentsdata').insertOne({firstName: sanitizeHtml(request.body.firstName), lastName: sanitizeHtml(request.body.lastName), age: parseInt(request.body.age) || 0,
         gpa: parseFloat(request.body.gpa) || 0, likes: parseInt(request.body.likes) || 0}) //0 acts as a fallback just in case field is empty or invalid/ Number ensures the likes is stored as a number//ParseFLoat ensures to convery the data to decimal 0.0
